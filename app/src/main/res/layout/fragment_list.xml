@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ListFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/textInputItem"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:layout_marginStart="@dimen/marginStart"
+            android:layout_marginEnd="@dimen/marginEnd"
+            android:text="@string/textInputItem"
+            app:layout_constraintTop_toBottomOf="@id/listItemRecycle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listItemRecycle"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginStart="@dimen/marginStart"
+            android:layout_marginEnd="@dimen/marginEnd"
+            app:layout_constraintBottom_toTopOf="@id/textInputItem"
+
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonAddItem"
+                android:layout_width="@dimen/buttonLayoutWidth"
+                android:layout_height="@dimen/buttonLayoutHeight"
+                android:layout_marginStart="@dimen/marginStart"
+                android:layout_marginEnd="@dimen/marginEnd"
+                android:layout_weight="1"
+                android:text="@string/buttonAddItem"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:enabled="false"/>
+
+            <Button
+                android:id="@+id/buttonDeleteItem"
+                android:layout_width="@dimen/buttonLayoutWidth"
+                android:layout_height="@dimen/buttonLayoutHeight"
+                android:layout_marginStart="@dimen/marginStart"
+                android:layout_marginEnd="@dimen/marginEnd"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/buttonDeleteItem" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
