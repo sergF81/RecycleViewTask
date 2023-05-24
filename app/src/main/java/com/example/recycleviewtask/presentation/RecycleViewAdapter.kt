@@ -9,9 +9,14 @@ import com.example.recycleviewtask.data.ItemFlower
 import com.example.recycleviewtask.databinding.ListRowItemBinding
 
 class RecycleViewItemAdapter(
-    private val dataSet: MutableList<ItemFlower>,
+    private var dataSet: MutableList<ItemFlower>,
     private var myListener: MyListener
 ) : RecyclerView.Adapter<RecycleViewItemAdapter.ItemHolder>() {
+
+    fun updateItems(list: MutableList<ItemFlower>) {
+        dataSet = list
+        notifyItemRangeInserted(0, list.size)
+    }
 
     class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

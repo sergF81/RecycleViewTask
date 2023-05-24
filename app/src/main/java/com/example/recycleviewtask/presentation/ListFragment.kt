@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recycleviewtask.data.DataSource
 import com.example.recycleviewtask.data.ItemFlower
 import com.example.recycleviewtask.databinding.FragmentListBinding
@@ -48,17 +49,17 @@ class ListFragment : Fragment() {
         }
     })
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentListBinding.inflate(inflater)
-        loadFlowers()
+
         return binding.root
     }
 
     private fun loadFlowers() {
         flowers = getAllFlowersCase.getAll()
+
+        adapter.updateItems(flowers)
+        adapter.notifyItemRangeInserted(0, flowers.size)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,11 +68,11 @@ class ListFragment : Fragment() {
         binding.buttonDeleteItem.setOnClickListener() {
             println("Выбран $positionItem элемент")
             adapter.notifyItemRemoved(positionItem)
+            flowers.removeAt(positionItem);
             adapter.notifyItemRangeChanged(0, adapter.itemCount)
 //            caseDelete.deleteItemFlowers(positionItem)
             binding.buttonDeleteItem.isEnabled = false
         }
-
         binding.buttonAddItem.setOnClickListener {
             flowerName = binding.textInputItem.text.toString()
 
@@ -83,7 +84,6 @@ class ListFragment : Fragment() {
 
             binding.buttonAddItem.isEnabled = false
         }
-
         binding.textInputItem.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -97,17 +97,15 @@ class ListFragment : Fragment() {
             }
         })
 
-
-        binding.listItemRecycle.layoutManager = GridLayoutManager(context, 1)
+        binding.listItemRecycle.layoutManager = LinearLayoutManager(requireContext())
         binding.listItemRecycle.adapter = adapter
         adapter.notifyItemRangeChanged(0, adapter.itemCount)
+        loadFlowers()
     }
 
     private fun showToast(message: String) {
         Toast.makeText(
-            requireContext(),
-            message,
-            Toast.LENGTH_SHORT
+            requireActivity(), message, Toast.LENGTH_SHORT
         ).show()
     }
 
