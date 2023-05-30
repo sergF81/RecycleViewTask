@@ -37,7 +37,6 @@ class RecycleViewItemAdapter(
         holder.bind(dataSet[position])
         holder.itemView.setOnClickListener {
             myListener.myClick(dataSet, position)
-
         }
     }
 

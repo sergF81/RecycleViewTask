@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recycleviewtask.data.DataSource
 import com.example.recycleviewtask.data.ItemFlower
 import com.example.recycleviewtask.databinding.FragmentListBinding
 import com.example.recycleviewtask.domain.usecase.AddFlowerCase
+import com.example.recycleviewtask.domain.usecase.DeleteItemFlowerCase
 import com.example.recycleviewtask.domain.usecase.GetAllFlowersCase
 
 private const val ERROR_MESSAGE = "Не могу добавить элемент, так как поле пустое"
@@ -22,9 +22,9 @@ class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
     private var flowerName: String = ""
+    private lateinit var flower: ItemFlower
 
-    // тут сам отрефакторишь, для закрепления
-//    private val caseDelete = CaseDeleteItemList(DataSource)
+    private val deleteItemFlowerCase = DeleteItemFlowerCase(DataSource())
     private val addFlowersCase = AddFlowerCase(DataSource())
     private val getAllFlowersCase = GetAllFlowersCase(DataSource())
     private var flowers = mutableListOf<ItemFlower>()
@@ -42,14 +42,20 @@ class ListFragment : Fragment() {
      * например отпал интернет, или бд упала.
      * По этому нам приходится создавать отдельный список, в который мы по возможности будем загружать данные
      */
-    private val adapter = RecycleViewItemAdapter(flowers, object : RecycleViewItemAdapter.MyListener {
-        override fun myClick(userArray: MutableList<ItemFlower>, position: Int) {
-            positionItem = position
-            binding.buttonDeleteItem.isEnabled = true
-        }
-    })
+    private val adapter =
+        RecycleViewItemAdapter(flowers, object : RecycleViewItemAdapter.MyListener {
+            override fun myClick(flowerArray: MutableList<ItemFlower>, position: Int) {
+                positionItem = position
+                flower = flowerArray[positionItem]
+                binding.buttonDeleteItem.isEnabled = true
+            }
+        })
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentListBinding.inflate(inflater)
 
         return binding.root
@@ -65,24 +71,24 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonDeleteItem.setOnClickListener() {
-            println("Выбран $positionItem элемент")
+        binding.buttonDeleteItem.setOnClickListener {
+
             adapter.notifyItemRemoved(positionItem)
-            flowers.removeAt(positionItem);
-            adapter.notifyItemRangeChanged(0, adapter.itemCount)
-//            caseDelete.deleteItemFlowers(positionItem)
+            deleteItemFlowerCase.deleteItemFlowers(flower)
+            adapter.notifyItemRangeChanged(positionItem, flowers.size)
             binding.buttonDeleteItem.isEnabled = false
         }
+
         binding.buttonAddItem.setOnClickListener {
+
             flowerName = binding.textInputItem.text.toString()
+            if (flowerName.isEmpty()) showToast(ERROR_MESSAGE) else {
+                addFlowersCase.addFlower(ItemFlower(itemId++, flowerName))
+                adapter.notifyItemChanged(0, adapter.itemCount)
+                binding.textInputItem.setText("")
+                binding.buttonAddItem.isEnabled = false
+            }
 
-            addFlowersCase.addFlower(ItemFlower(itemId++, flowerName))
-            adapter.notifyItemChanged(0, adapter.itemCount)
-            binding.textInputItem.setText("")
-
-            if (flowerName.isEmpty()) showToast(ERROR_MESSAGE)
-
-            binding.buttonAddItem.isEnabled = false
         }
         binding.textInputItem.addTextChangedListener(object : TextWatcher {
 

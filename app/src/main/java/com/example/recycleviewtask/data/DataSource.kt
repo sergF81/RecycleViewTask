@@ -24,6 +24,12 @@ class DataSource {
         return flowers.add(flower);
     }
 
+
+    fun deleteFlower(flower: ItemFlower): Boolean {
+
+        return flowers.remove(flower);
+    }
+
     /**
      * Метод получения всех цветов
      *
