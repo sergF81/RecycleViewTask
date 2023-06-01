@@ -15,23 +15,21 @@ import com.example.recycleviewtask.databinding.FragmentListBinding
 import com.example.recycleviewtask.domain.usecase.AddFlowerCase
 import com.example.recycleviewtask.domain.usecase.DeleteItemFlowerCase
 import com.example.recycleviewtask.domain.usecase.GetAllFlowersCase
+import com.squareup.picasso.Picasso
 
 private const val ERROR_MESSAGE = "Не могу добавить элемент, так как поле пустое"
+private const val NO_IMAGE_FLOWER = "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/1242803/under-construction-sign-clipart-xl.png"
 
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
     private var flowerName: String = ""
     private lateinit var flower: ItemFlower
-
     private val deleteItemFlowerCase = DeleteItemFlowerCase(DataSource())
     private val addFlowersCase = AddFlowerCase(DataSource())
     private val getAllFlowersCase = GetAllFlowersCase(DataSource())
     private var flowers = mutableListOf<ItemFlower>()
     var positionItem: Int = 0
-
-    //я пока не стал заморачиваться с ид, пока для демонстрации пусть будет вот такой костыль
-    private var itemId: Int = 17
 
     /**
      * В реальности мы не можем написать код вот так,
@@ -57,15 +55,15 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListBinding.inflate(inflater)
-
         return binding.root
     }
 
     private fun loadFlowers() {
         flowers = getAllFlowersCase.getAll()
-
         adapter.updateItems(flowers)
         adapter.notifyItemRangeInserted(0, flowers.size)
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,6 +73,11 @@ class ListFragment : Fragment() {
 
             adapter.notifyItemRemoved(positionItem)
             deleteItemFlowerCase.deleteItemFlowers(flower)
+
+            for (i: Int in positionItem + 1..flowers.size) {
+                flowers[i - 1].id = i
+                println(i)
+            }
             adapter.notifyItemRangeChanged(positionItem, flowers.size)
             binding.buttonDeleteItem.isEnabled = false
         }
@@ -83,7 +86,13 @@ class ListFragment : Fragment() {
 
             flowerName = binding.textInputItem.text.toString()
             if (flowerName.isEmpty()) showToast(ERROR_MESSAGE) else {
-                addFlowersCase.addFlower(ItemFlower(itemId++, flowerName))
+                addFlowersCase.addFlower(
+                    ItemFlower(
+                        flowers.size + 1,
+                        flowerName,
+                        imageFlower = NO_IMAGE_FLOWER
+                    )
+                )
                 adapter.notifyItemChanged(0, adapter.itemCount)
                 binding.textInputItem.setText("")
                 binding.buttonAddItem.isEnabled = false
