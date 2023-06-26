@@ -12,50 +12,60 @@ internal object ItemsFlower {
         ItemFlower(
             id = 1,
             name = "Роза",
-            imageFlower = "https://upload.wikimedia.org/wikipedia/commons/b/bf/Rosa_Red_Chateau01.jpg"
+            descriptionFlower = "Одна прекрасная роза среди навоза!",
+            resourceImageFlower = "https://upload.wikimedia.org/wikipedia/commons/b/bf/Rosa_Red_Chateau01.jpg",
+            ItemDifferentHolder.TYPE_IMAGE
 
         ),
         ItemFlower(
             id = 2,
             name = "Лилия",
-            imageFlower = "https://upload.wikimedia.org/wikipedia/commons/1/1e/Lilium_candidum_2.jpg"
-
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_BUTTON
         ),
         ItemFlower(
             id = 3,
             name = "Тюльпан",
-            imageFlower = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Tulipa_Couleur_Cardinal.jpg/1200px-Tulipa_Couleur_Cardinal.jpg"
-
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
         ),
         ItemFlower(
             id = 4,
             name = "Гладиолус",
-            imageFlower = "https://img.7dach.ru/image/600/00/00/53/2013/02/20/d9311a.jpg"
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
 
-        ),
+            ),
         ItemFlower(
             id = 5,
             name = "Гартензия",
-            imageFlower = "https://korolevskysad.ru/wp-content/uploads/2019/02/Gortenziya-krupnolistnaya-Blyu-Bodensi-1.jpg"
+            descriptionFlower = "Много цветков в одном кусте.",
+            resourceImageFlower = "https://korolevskysad.ru/wp-content/uploads/2019/02/Gortenziya-krupnolistnaya-Blyu-Bodensi-1.jpg",
+            ItemDifferentHolder.TYPE_IMAGE
 
 
         ),
         ItemFlower(
             id = 6,
             name = "Пион",
-            imageFlower = "https://tsvetomania.ru/upload/resize_cache/iblock/873/710_605_1/8730652728d8f94dc77dfc27e1221c61.jpg"
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
 
-
-        ),
+            ),
 
 
         ItemFlower(
             id = 7,
             name = "Фиалка",
-            imageFlower = "https://cdn.botanichka.ru/wp-content/uploads/2022/12/czvetochnye-motylki-fialka-sestrinskaya-v-sadu.jpg"
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
 
-
-        )
+            )
     )
 
     fun flowerList() = flowers

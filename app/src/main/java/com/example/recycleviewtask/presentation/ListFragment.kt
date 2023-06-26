@@ -10,15 +10,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recycleviewtask.data.DataSource
+import com.example.recycleviewtask.data.ItemDifferentHolder
 import com.example.recycleviewtask.data.ItemFlower
 import com.example.recycleviewtask.databinding.FragmentListBinding
 import com.example.recycleviewtask.domain.usecase.AddFlowerCase
 import com.example.recycleviewtask.domain.usecase.DeleteItemFlowerCase
 import com.example.recycleviewtask.domain.usecase.GetAllFlowersCase
-import com.squareup.picasso.Picasso
+import android.R
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.recycleviewtask.data.ChosenFlower
+import com.example.recycleviewtask.domain.usecase.GetInfoChosenFlower
+
 
 private const val ERROR_MESSAGE = "Не могу добавить элемент, так как поле пустое"
-private const val NO_IMAGE_FLOWER = "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/1242803/under-construction-sign-clipart-xl.png"
+
 
 class ListFragment : Fragment() {
 
@@ -28,6 +36,7 @@ class ListFragment : Fragment() {
     private val deleteItemFlowerCase = DeleteItemFlowerCase(DataSource())
     private val addFlowersCase = AddFlowerCase(DataSource())
     private val getAllFlowersCase = GetAllFlowersCase(DataSource())
+    private val getInfoChosenFlower = GetInfoChosenFlower(DataSource())
     private var flowers = mutableListOf<ItemFlower>()
     var positionItem: Int = 0
 
@@ -45,7 +54,32 @@ class ListFragment : Fragment() {
             override fun myClick(flowerArray: MutableList<ItemFlower>, position: Int) {
                 positionItem = position
                 flower = flowerArray[positionItem]
-                binding.buttonDeleteItem.isEnabled = true
+                val imageOneFlower = getInfoChosenFlower.getImageFlower(flower)
+                val descriptionOneFlower = getInfoChosenFlower.getDescriptionFlower(flower)
+                val chosenFlower = ChosenFlower().apply{
+                       sourceImageFlower = imageOneFlower
+                    descriptionFlower = descriptionOneFlower
+                }
+
+                if (imageOneFlower.equals(null)) {
+                    binding.buttonDeleteItem.isEnabled = true
+
+                } else {
+                    //создание action для передачи параметров во фрагмент InfoFlowerFragment
+//                    val action =
+//                        ListFragmentDirections.actionListFragmentToInfoFlowerFragment(imageOneFlower.toString(), descriptionOneFlower.toString())
+
+                    val action = ListFragmentDirections.actionListFragmentToInfoFlowerFragment(chosenFlower)
+
+                    // передача самого action через navController
+                    findNavController().navigate(action)
+
+
+
+// создание nav-контроллера с дальнейшим открытием фрагмента infoFlowerFragment
+//                    val controller = findNavController()
+//                    controller.navigate(com.example.recycleviewtask.R.id.infoFlowerFragment)
+                }
             }
         })
 
@@ -62,24 +96,22 @@ class ListFragment : Fragment() {
         flowers = getAllFlowersCase.getAll()
         adapter.updateItems(flowers)
         adapter.notifyItemRangeInserted(0, flowers.size)
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonDeleteItem.setOnClickListener {
-
             adapter.notifyItemRemoved(positionItem)
             deleteItemFlowerCase.deleteItemFlowers(flower)
 
-            for (i: Int in positionItem + 1..flowers.size) {
+            for (i in flower.id..flowers.size) {
                 flowers[i - 1].id = i
-                println(i)
+
             }
             adapter.notifyItemRangeChanged(positionItem, flowers.size)
             binding.buttonDeleteItem.isEnabled = false
+
         }
 
         binding.buttonAddItem.setOnClickListener {
@@ -90,7 +122,9 @@ class ListFragment : Fragment() {
                     ItemFlower(
                         flowers.size + 1,
                         flowerName,
-                        imageFlower = NO_IMAGE_FLOWER
+                        null,
+                        null,
+                        ItemDifferentHolder.TYPE_TEXT
                     )
                 )
                 adapter.notifyItemChanged(0, adapter.itemCount)
@@ -122,12 +156,6 @@ class ListFragment : Fragment() {
         Toast.makeText(
             requireActivity(), message, Toast.LENGTH_SHORT
         ).show()
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance() = ListFragment()
     }
 }
 
