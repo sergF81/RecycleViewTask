@@ -12,18 +12,18 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/textIdView"
+            android:id="@+id/textIdTextTypeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+             />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textNameTextTypeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="@string/textNameTextTypeView" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

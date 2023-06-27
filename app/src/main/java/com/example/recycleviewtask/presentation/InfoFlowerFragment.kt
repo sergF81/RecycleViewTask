@@ -16,7 +16,6 @@ private const val NO_IMAGE_FLOWER =
 
 class InfoFlowerFragment : Fragment() {
 
-    //    private val dataModel: DataModel by activityViewModels()
     private lateinit var binding: FragmentInfoFlowerBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +34,11 @@ class InfoFlowerFragment : Fragment() {
         val imageFlower = argsObjectsFlower.chosenFlowerArg.sourceImageFlower
         val description = argsObjectsFlower.chosenFlowerArg.descriptionFlower
 
-        binding.textInfoFlower.text = description
+        binding.textChoseInfoFlower .text = description
 
-        Picasso.with(binding.imageView2.context)
+        Picasso.with(binding.imageChoseViewFlower.context)
             .load(imageFlower)
-            .into(binding.imageView2);
+            .into(binding.imageChoseViewFlower);
 
     }
 }

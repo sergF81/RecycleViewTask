@@ -10,18 +10,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recycleviewtask.data.DataSource
-import com.example.recycleviewtask.data.ItemDifferentHolder
 import com.example.recycleviewtask.data.ItemFlower
 import com.example.recycleviewtask.databinding.FragmentListBinding
 import com.example.recycleviewtask.domain.usecase.AddFlowerCase
 import com.example.recycleviewtask.domain.usecase.DeleteItemFlowerCase
 import com.example.recycleviewtask.domain.usecase.GetAllFlowersCase
-import android.R
-
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.recycleviewtask.data.ChosenFlower
+import com.example.recycleviewtask.data.ItemViewType
 import com.example.recycleviewtask.domain.usecase.GetInfoChosenFlower
 
 
@@ -33,10 +29,11 @@ class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
     private var flowerName: String = ""
     private lateinit var flower: ItemFlower
-    private val deleteItemFlowerCase = DeleteItemFlowerCase(DataSource())
-    private val addFlowersCase = AddFlowerCase(DataSource())
-    private val getAllFlowersCase = GetAllFlowersCase(DataSource())
-    private val getInfoChosenFlower = GetInfoChosenFlower(DataSource())
+    private val dataSource = DataSource()
+    private val deleteItemFlowerCase = DeleteItemFlowerCase(dataSource)
+    private val addFlowersCase = AddFlowerCase(dataSource)
+    private val getAllFlowersCase = GetAllFlowersCase(dataSource)
+    private val getInfoChosenFlower = GetInfoChosenFlower()
     private var flowers = mutableListOf<ItemFlower>()
     var positionItem: Int = 0
 
@@ -66,19 +63,10 @@ class ListFragment : Fragment() {
 
                 } else {
                     //создание action для передачи параметров во фрагмент InfoFlowerFragment
-//                    val action =
-//                        ListFragmentDirections.actionListFragmentToInfoFlowerFragment(imageOneFlower.toString(), descriptionOneFlower.toString())
-
                     val action = ListFragmentDirections.actionListFragmentToInfoFlowerFragment(chosenFlower)
 
                     // передача самого action через navController
                     findNavController().navigate(action)
-
-
-
-// создание nav-контроллера с дальнейшим открытием фрагмента infoFlowerFragment
-//                    val controller = findNavController()
-//                    controller.navigate(com.example.recycleviewtask.R.id.infoFlowerFragment)
                 }
             }
         })
@@ -124,7 +112,7 @@ class ListFragment : Fragment() {
                         flowerName,
                         null,
                         null,
-                        ItemDifferentHolder.TYPE_TEXT
+                        ItemViewType.TYPE_TEXT
                     )
                 )
                 adapter.notifyItemChanged(0, adapter.itemCount)

@@ -13,13 +13,13 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageChoseViewFlower"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:src="@drawable/pion" />
 
         <TextView
-            android:id="@+id/textInfoFlower"
+            android:id="@+id/textChoseInfoFlower"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/textInfoFlower"

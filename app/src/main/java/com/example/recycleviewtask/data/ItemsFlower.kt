@@ -14,7 +14,7 @@ internal object ItemsFlower {
             name = "Роза",
             descriptionFlower = "Одна прекрасная роза среди навоза!",
             resourceImageFlower = "https://upload.wikimedia.org/wikipedia/commons/b/bf/Rosa_Red_Chateau01.jpg",
-            ItemDifferentHolder.TYPE_IMAGE
+            ItemViewType.TYPE_IMAGE
 
         ),
         ItemFlower(
@@ -22,21 +22,21 @@ internal object ItemsFlower {
             name = "Лилия",
             descriptionFlower = null,
             resourceImageFlower = null,
-            ItemDifferentHolder.TYPE_BUTTON
+            ItemViewType.TYPE_BUTTON
         ),
         ItemFlower(
             id = 3,
             name = "Тюльпан",
             descriptionFlower = null,
             resourceImageFlower = null,
-            ItemDifferentHolder.TYPE_TEXT
+            ItemViewType.TYPE_TEXT
         ),
         ItemFlower(
             id = 4,
             name = "Гладиолус",
             descriptionFlower = null,
             resourceImageFlower = null,
-            ItemDifferentHolder.TYPE_TEXT
+            ItemViewType.TYPE_TEXT
 
             ),
         ItemFlower(
@@ -44,7 +44,7 @@ internal object ItemsFlower {
             name = "Гартензия",
             descriptionFlower = "Много цветков в одном кусте.",
             resourceImageFlower = "https://korolevskysad.ru/wp-content/uploads/2019/02/Gortenziya-krupnolistnaya-Blyu-Bodensi-1.jpg",
-            ItemDifferentHolder.TYPE_IMAGE
+            ItemViewType.TYPE_IMAGE
 
 
         ),
@@ -53,7 +53,7 @@ internal object ItemsFlower {
             name = "Пион",
             descriptionFlower = null,
             resourceImageFlower = null,
-            ItemDifferentHolder.TYPE_TEXT
+            ItemViewType.TYPE_TEXT
 
             ),
 
@@ -63,7 +63,7 @@ internal object ItemsFlower {
             name = "Фиалка",
             descriptionFlower = null,
             resourceImageFlower = null,
-            ItemDifferentHolder.TYPE_TEXT
+            ItemViewType.TYPE_TEXT
 
             )
     )
