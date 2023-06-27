@@ -11,81 +11,61 @@ internal object ItemsFlower {
     private val flowers = mutableListOf(
         ItemFlower(
             id = 1,
-            name = "Роза"
+            name = "Роза",
+            descriptionFlower = "Одна прекрасная роза среди навоза!",
+            resourceImageFlower = "https://upload.wikimedia.org/wikipedia/commons/b/bf/Rosa_Red_Chateau01.jpg",
+            ItemDifferentHolder.TYPE_IMAGE
 
         ),
         ItemFlower(
             id = 2,
-            name = "Лилия"
+            name = "Лилия",
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_BUTTON
         ),
         ItemFlower(
             id = 3,
-            name = "Тюльпан"
+            name = "Тюльпан",
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
         ),
         ItemFlower(
             id = 4,
-            name = "Гладиолус"
-        ),
+            name = "Гладиолус",
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
+
+            ),
         ItemFlower(
             id = 5,
-            name = "Гартензия 1"
+            name = "Гартензия",
+            descriptionFlower = "Много цветков в одном кусте.",
+            resourceImageFlower = "https://korolevskysad.ru/wp-content/uploads/2019/02/Gortenziya-krupnolistnaya-Blyu-Bodensi-1.jpg",
+            ItemDifferentHolder.TYPE_IMAGE
+
 
         ),
         ItemFlower(
             id = 6,
-            name = "Гартензия 2"
+            name = "Пион",
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
 
-        ),
+            ),
+
+
         ItemFlower(
             id = 7,
-            name = "Гартензия 3"
+            name = "Фиалка",
+            descriptionFlower = null,
+            resourceImageFlower = null,
+            ItemDifferentHolder.TYPE_TEXT
 
-        ),
-        ItemFlower(
-            id = 8,
-            name = "Гартензия 4"
-
-        ),
-        ItemFlower(
-            id = 9,
-            name = "Гартензия 5"
-
-        ),
-        ItemFlower(
-            id = 10,
-            name = "Гартензия 6"
-
-        ),
-        ItemFlower(
-            id = 11,
-            name = "Гартензия 7"
-
-        ),
-        ItemFlower(
-            id = 12,
-            name = "Гартензия 8"
-
-        ),
-        ItemFlower(
-            id = 13,
-            name = "Гартензия 9"
-
-        ),
-        ItemFlower(
-            id = 14,
-            name = "Гартензия 10"
-
-        ),
-        ItemFlower(
-            id = 15,
-            name = "Гартензия 11"
-
-        ),
-        ItemFlower(
-            id = 16,
-            name = "Гартензия 12"
-
-        )
+            )
     )
 
     fun flowerList() = flowers
