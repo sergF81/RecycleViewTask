@@ -18,7 +18,6 @@ import com.example.recycleviewtask.domain.usecase.GetAllFlowersCase
 import androidx.navigation.fragment.findNavController
 import com.example.recycleviewtask.data.ChosenFlower
 import com.example.recycleviewtask.data.ItemViewType
-import com.example.recycleviewtask.domain.usecase.GetInfoChosenFlower
 
 
 private const val ERROR_MESSAGE = "Не могу добавить элемент, так как поле пустое"
@@ -33,7 +32,6 @@ class ListFragment : Fragment() {
     private val deleteItemFlowerCase = DeleteItemFlowerCase(dataSource)
     private val addFlowersCase = AddFlowerCase(dataSource)
     private val getAllFlowersCase = GetAllFlowersCase(dataSource)
-    private val getInfoChosenFlower = GetInfoChosenFlower()
     private var flowers = mutableListOf<ItemFlower>()
     var positionItem: Int = 0
 
@@ -51,10 +49,10 @@ class ListFragment : Fragment() {
             override fun myClick(flowerArray: MutableList<ItemFlower>, position: Int) {
                 positionItem = position
                 flower = flowerArray[positionItem]
-                val imageOneFlower = getInfoChosenFlower.getImageFlower(flower)
-                val descriptionOneFlower = getInfoChosenFlower.getDescriptionFlower(flower)
-                val chosenFlower = ChosenFlower().apply{
-                       sourceImageFlower = imageOneFlower
+                val imageOneFlower = flower.resourceImageFlower
+                val descriptionOneFlower = flower.descriptionFlower
+                val chosenFlower = ChosenFlower().apply {
+                    sourceImageFlower = imageOneFlower
                     descriptionFlower = descriptionOneFlower
                 }
 
@@ -63,7 +61,8 @@ class ListFragment : Fragment() {
 
                 } else {
                     //создание action для передачи параметров во фрагмент InfoFlowerFragment
-                    val action = ListFragmentDirections.actionListFragmentToInfoFlowerFragment(chosenFlower)
+                    val action =
+                        ListFragmentDirections.actionListFragmentToInfoFlowerFragment(chosenFlower)
 
                     // передача самого action через navController
                     findNavController().navigate(action)
