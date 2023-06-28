@@ -2,14 +2,9 @@ package com.example.recycleviewtask.presentation
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recycleviewtask.R
-import com.example.recycleviewtask.data.ItemDifferentHolder
+import com.example.recycleviewtask.data.ItemViewType
 import com.example.recycleviewtask.data.ItemFlower
 import com.example.recycleviewtask.databinding.RowTypeButtonBinding
 import com.example.recycleviewtask.databinding.RowTypeImageBinding
@@ -18,7 +13,6 @@ import com.example.recycleviewtask.presentation.Const.HASBUTTON
 import com.example.recycleviewtask.presentation.Const.HASIMAGE
 import com.example.recycleviewtask.presentation.Const.HASTEXT
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.withContext
 
 
 class RecycleViewItemAdapter(
@@ -35,8 +29,8 @@ class RecycleViewItemAdapter(
         RecyclerView.ViewHolder(itemView.root) {
         private val binding = RowTypeTextBinding.bind(itemView.root)
         fun bind(s: ItemFlower) {
-            binding.textIdView.text = s.id.toString()
-            binding.textView.text = s.name
+            binding.textIdTextTypeView.text = s.id.toString()
+            binding.textNameTextTypeView.text = s.name
         }
     }
 
@@ -46,10 +40,10 @@ class RecycleViewItemAdapter(
 
         private val binding = RowTypeImageBinding.bind(itemView.root)
         fun bind(s: ItemFlower) {
-            binding.textIdView2.text = s.id.toString()
-            Picasso.with(binding.imageView.context)
+            binding.textIdImageTypeView.text = s.id.toString()
+            Picasso.with(binding.imageFlowerImageTypeView.context)
                 .load(s.resourceImageFlower)
-                .into(binding.imageView);
+                .into(binding.imageFlowerImageTypeView);
         }
     }
 
@@ -58,16 +52,16 @@ class RecycleViewItemAdapter(
 
         private val binding = RowTypeButtonBinding.bind(itemView.root)
         fun bind(s: ItemFlower) {
-            binding.textIdView3.text = s.id.toString()
-            binding.buttonGo.isEnabled
+            binding.textIdButtonTypeView.text = s.id.toString()
+            binding.buttonButtonTypeView.isEnabled
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (dataSet[position].itemDifferentHolder == ItemDifferentHolder.TYPE_IMAGE) {
+        return if (dataSet[position].itemDifferentHolder == ItemViewType.TYPE_IMAGE) {
             HASIMAGE
         } else {
-            if (dataSet[position].itemDifferentHolder == ItemDifferentHolder.TYPE_TEXT) HASTEXT else HASBUTTON
+            if (dataSet[position].itemDifferentHolder == ItemViewType.TYPE_TEXT) HASTEXT else HASBUTTON
         }
     }
 

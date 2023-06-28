@@ -5,6 +5,6 @@ data class ItemFlower(
     val name: String,
     val descriptionFlower: String?,
     var resourceImageFlower: String?,
-    val itemDifferentHolder: ItemDifferentHolder
+    val itemDifferentHolder: ItemViewType
 
 )
